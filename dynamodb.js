@@ -1,5 +1,8 @@
 const { DynamoDb } = require('./aws')
 
+//crud
+//create table if existe
+//delete table
 
 const createTable = ({ name, attributes, keys, configs }) => {
 
