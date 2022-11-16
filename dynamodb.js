@@ -1,11 +1,20 @@
-const { AWS } = require('./aws')
+const { DynamoDb } = require('./aws')
 
-const local = new AWS.Endpoint('http://localhost:8000');
-
-const dynamodb = new AWS.DynamoDB({endpoint:local })
 
 const createTable = ({ name, attributes, keys, configs }) => {
 
+    //input
+    // {
+    //     name: 'test2', attributes: [
+    //         {
+    //             AttributeName: 'id',
+    //             AttributeType: 'N'
+    //         }
+    //     ], keys: [{
+    //         AttributeName: 'id',
+    //         KeyType: 'HASH'
+    //     },]
+    // }
     const params = {
         AttributeDefinitions: attributes,
         KeySchema: keys,
@@ -20,10 +29,22 @@ const createTable = ({ name, attributes, keys, configs }) => {
     };
 
     try {
-        return dynamodb.createTable(params).promise()
+        return DynamoDb.createTable(params).promise()
     } catch (error) {
         console.log(error)
     }
 }
 
-module.exports = { createTable }
+const listTables = () => {
+    //return
+    //const { TableNames } = await listTables()
+
+    try {
+        return DynamoDb.listTables({}).promise();
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+module.exports = { createTable, listTables }

@@ -1,20 +1,10 @@
-const { createTable } = require('./dynamodb')
+require('dotenv').config({ path: '../.env' })
+
+const { createTable, listTables } = require('./dynamodb')
 
 async function main() {
-
-    const table = await createTable({
-        name: 'test', attributes: [
-            {
-                AttributeName: 'id',
-                AttributeType: 'N'
-            }
-        ], keys: [{
-            AttributeName: 'id',
-            KeyType: 'HASH'
-        },]
-    })
-
-    console.log(table)
+    const { TableNames } = await listTables()
+    console.log(TableNames)
 }
 
 main()
